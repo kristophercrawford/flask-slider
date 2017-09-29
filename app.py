@@ -60,6 +60,7 @@ def homepage():
 
 @app.route('/linear', methods=['GET', 'POST'])
 def linear():
+    global dir_input
     if request.method == "POST":
         linear_dict = request.form
         print(linear_dict)
