@@ -1,0 +1,42 @@
+{% extends 'layout.html' %} {% block body %} 
+<body>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">PySlider</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="/">Home</a></li>
+      <li><a href="/linear">Linear Slider</a></li>
+      <li class="active"><a href="/pan">Panoramic Slider</a></li>
+    </ul>
+  </div>
+</nav>
+<div class='container'>
+<h3>Panoramic Slide</h3>
+<form class="form-inline" action="{{ url_for('pan')}}" method="post">
+  <label>Slider Speed:</label>
+  <select name="slider_speed" class="slider_speed" slider_speed style="width: 60px;">
+    <option value="full">Full</option>
+    <option value="half">Half</option>
+    <option value ="1/4">1/4</option>
+    <option value="1/8">1/8</option>
+    <option value="1/16" selected="selected">1/16</option>
+    <option vaule="1/32">1/32</option>
+  </select>
+  <br />
+	<label># of Steps:&nbsp;</label>
+	<input type="number" name="steps" required style="width: 60px;">
+	<br />
+	<label>Slider Direction:&nbsp;</label>
+	<input type="radio" name="direction" value="l2r" required> Left to Right&nbsp;
+	<input type="radio" name="direction" value="r2l" required> Right to Left<br>
+	<label>Panoramic Direction:&nbsp;</label>
+	<input type="radio" name="pan_direction" value="concave" required> Convex&nbsp;
+	<input type="radio" name="pan_direction" value="convex" required> Concave<br>
+	<br />
+<button type="submit" class="btn btn-default">Submit</button>
+</form>
+</div>
+</body>
+{% endblock %}

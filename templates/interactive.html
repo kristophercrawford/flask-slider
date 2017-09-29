@@ -1,0 +1,37 @@
+{% extends 'layout.html' %} {% block body %} 
+<head>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
+	</script>
+	<script type="text/javascript">
+		$("button").click(function(e) {
+		    e.preventDefault();
+		    $.ajax({
+		        type: "POST",
+		        url: "/",
+		        data: { 
+		            id: $(this).val()
+		        },
+		        success: function(result) {
+		            alert('ok');
+		        },
+		        error: function(result) {
+		            alert('error');
+		        }
+		    });
+		});
+	</script>
+</head>
+<body>
+	<div class='container'>
+		<h3>
+			Sample L3 header 
+		</h3>
+		<form method="post">
+			<button class="btn btn-default" id="left" value="left" name="button">
+				Move Left 
+			</button>
+			<button class="btn btn-default" id="right" value="right" name="button">
+				Move Right 
+			</button>
+		</form>
+		{% endblock %}
