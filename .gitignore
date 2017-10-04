@@ -4,3 +4,7 @@ bin/
 include/
 lib/
 share/
+
+#Mac artifacts
+.DS_Store
+._.DS_Store
