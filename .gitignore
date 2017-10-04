@@ -1,3 +1,6 @@
 #Build env
 venv/
 bin/
+include/
+lib/
+share/
