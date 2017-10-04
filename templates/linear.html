@@ -1,65 +1,119 @@
 {% extends 'layout.html' %} {% block body %} 
-<body>
 <nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">PySlider</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li><a href="/">Home</a></li>
-      <li class="active"><a href="/linear">Linear Slider</a></li>
-      <li><a href="/pan">Panoramic Slider</a></li>
-    </ul>
-  </div>
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#">
+				PySlider
+			</a>
+		</div>
+		<ul class="nav navbar-nav">
+			<li>
+				<a href="/">
+					Home
+				</a>
+			</li>
+			<li class="active">
+				<a href="/linear">
+					Linear Slider
+				</a>
+			</li>
+			<li>
+				<a href="/pan">
+					Panoramic Slider
+				</a>
+			</li>
+		</ul>
+	</div>
 </nav>
 <div class='container'>
-<h3>Linear Slider</h3>
-<form class="form-inline" action="{{ url_for('linear')}}" method="post">
-  <label>Slider Speed:</label>
-  <select name="slider_speed" class="slider_speed" slider_speed style="width: 60px;">
-    <option value="full">Full</option>
-    <option value="half">Half</option>
-    <option value ="1/4">1/4</option>
-    <option value="1/8">1/8</option>
-    <option value="1/16" selected="selected">1/16</option>
-    <option vaule="1/32">1/32</option>
-  </select>
-  <br />
-	<label># of Steps:&nbsp;</label>
-	<input type="number" name="steps" required style="width: 60px;">
-	<br />
-	<label>Slider Direction:&nbsp;</label>
-	<input type="radio" name="direction" value="1" required> Left to Right&nbsp;
-	<input type="radio" name="direction" value="0" required> Right to Left<br>
-	<br />	
-<button type="submit" class="btn btn-default">Submit</button>
-</form>
-</div>
-<br />
+	<h3>
+		Linear Slider
+	</h3>
+	<form id="linear_form" method="POST">
+		<label>
+			Slider Speed:
+		</label>
+		<select name="slider_speed" class="slider_speed" slider_speed style="width: 60px;">
+			<option value="full">
+				Full
+			</option>
+			<option value="half">
+				Half
+			</option>
+			<option value="1/4">
+				1/4
+			</option>
+			<option value="1/8">
+				1/8
+			</option>
+			<option value="1/16" selected="selected">
+				1/16
+			</option>
+			<option vaule="1/32">
+				1/32
+			</option>
+		</select>
+		<br /> 
+		<label>
+			# of Steps:&nbsp;
+		</label>
+		<input type="number" name="steps" required style="width: 60px;">
+			<br /> 
+			<label>
+				Slider Direction:&nbsp;
+			</label>
+			<input type="radio" name="direction" value="0" required>
+				Left to Right&nbsp; 
+				<input type="radio" name="direction" value="1" required>
+					Right to Left<br> <br /> 
+					<button class="btn btn-default" id="button" name="button">
+						Submit
+					</button>
+				</form>
+			</div>
+			<br /> {% with errors = get_flashed_messages(category_filter=["error"]) %} {% if errors %} 
+			<div class="container alert alert-danger fade in alert-dismissable">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">
+					&times;
+				</a>
+				{%- for message in errors %} 
+				<p>
+					{{ message }}
+				</p>
+				{% endfor %} 
+			</div>
+			{% endif %} {% endwith %} {% with success = get_flashed_messages(category_filter=["success"]) %} {% if success %} 
+			<div class="container alert alert-success fade in alert-dismissable">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">
+					&times;
+				</a>
+				{% for message in success %} 
+				<p>
+					{{ message }}
+				</p>
+				{% endfor %} 
+			</div>
+			{% endif %} {% endwith %} 
+			<script src="https://code.jquery.com/jquery-1.10.2.js">
+			</script>
+			<script type="text/javascript">
 
-{% with errors = get_flashed_messages(category_filter=["error"]) %}
-{% if errors %}
-<div class="container alert alert-danger fade in alert-dismissable">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    {%- for message in errors %}
-	  <p>{{ message }}</p>
-    {% endfor %}
-</div>
-{% endif %}
-{% endwith %}
-
-{% with success = get_flashed_messages(category_filter=["success"]) %}
-  {% if success %}
-    <div class="container alert alert-success fade in alert-dismissable">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    {% for message in success %}
-      <p>{{ message }}</p>
-    {% endfor %}
-	</div>
-  {% endif %}
-{% endwith %}
-
-
-
-</body>
-{% endblock %}
+		var frm = $('#linear_form');
+		
+		frm.submit(function (e) {
+		e.preventDefault();
+		    $.ajax({
+		        type: 'POST',
+            	url: '/postdata',
+            	data: frm.serialize(),
+		        success: function(data, status, request) {
+		            console('ok');
+		        },
+		        error: function(result) {
+		            alert('error');
+		        }
+		    });
+		});
+	
+			</script>
+			{% endblock %}

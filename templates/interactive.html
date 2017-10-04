@@ -1,13 +1,34 @@
-{% extends 'layout.html' %} {% block body %} 
-<head>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
-	</script>
+<html>
+	<head>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+		<meta charset="utf8" name="viewport" content="width=device-width, initial-scale=1"> 
+		<title>
+			MyFlaskApp
+		</title>
+		  <link rel="stylesheet" href="/static/bootstrap.min.css">
+	</head>
+	<body>
+		 
+
+	<div id="myDiv" class='container'>
+		<h3>
+			Sample L3 header 
+		</h3>
+		<form method="post">
+			<button class="btn btn-default" id="left" value="left" name="button">
+				Move Left 
+			</button>
+			<button class="btn btn-default" id="right" value="right" name="button">
+				Move Right 
+			</button>
+		</form>
+		
 	<script type="text/javascript">
 		$("button").click(function(e) {
 		    e.preventDefault();
 		    $.ajax({
 		        type: "POST",
-		        url: "/",
+		        url: "/interactive",
 		        data: { 
 		            id: $(this).val()
 		        },
@@ -20,18 +41,21 @@
 		    });
 		});
 	</script>
-</head>
-<body>
-	<div class='container'>
-		<h3>
-			Sample L3 header 
-		</h3>
-		<form method="post">
-			<button class="btn btn-default" id="left" value="left" name="button">
-				Move Left 
-			</button>
-			<button class="btn btn-default" id="right" value="right" name="button">
-				Move Right 
-			</button>
-		</form>
-		{% endblock %}
+
+  
+{% with success = get_flashed_messages(category_filter=["success"]) %}
+  {% if success %}
+    <div class="container alert alert-success fade in alert-dismissable">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    {% for message in success %}
+      <p>{{ message }}</p>
+    {% endfor %}
+	</div>
+  {% endif %}
+{% endwith %}
+
+
+ 
+	</body>
+
+</html>
