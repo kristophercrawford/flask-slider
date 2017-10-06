@@ -22,7 +22,12 @@
 					Panoramic Slider
 				</a>
 			</li>
+			      <li><a href="/status">Status</a></li>
+
 		</ul>
+<form id="shutdown" class="navbar-form navbar-right">
+        <button type="shutdown" class="btn btn-danger"><a style="color: inherit; text-decoration: none" href="/shutdown_pi" onclick="return confirm('Are you sure?');">Shutdown</a></button>
+      </form>
 	</div>
 </nav>
 <div class='container'>
@@ -30,34 +35,15 @@
 		Linear Slider
 	</h3>
 	<form id="linear_form" method="POST">
-		<label>
-			Slider Speed:
+	<label>
+			Time Delay Between Shots (seconds):&nbsp;
 		</label>
-		<select name="slider_speed" class="slider_speed" slider_speed style="width: 60px;">
-			<option value="full">
-				Full
-			</option>
-			<option value="half">
-				Half
-			</option>
-			<option value="1/4">
-				1/4
-			</option>
-			<option value="1/8">
-				1/8
-			</option>
-			<option value="1/16" selected="selected">
-				1/16
-			</option>
-			<option vaule="1/32">
-				1/32
-			</option>
-		</select>
+		<input type="number" name="time_delay" required style="width: 60px;">
 		<br /> 
 		<label>
-			# of Steps:&nbsp;
+			Number of Shots:&nbsp;
 		</label>
-		<input type="number" name="steps" required style="width: 60px;">
+		<input type="number" name="shots" required style="width: 60px;">
 			<br /> 
 			<label>
 				Slider Direction:&nbsp;
@@ -66,9 +52,7 @@
 				Left to Right&nbsp; 
 				<input type="radio" name="direction" value="1" required>
 					Right to Left<br> <br /> 
-					<button class="btn btn-default" id="button" name="button">
-						Submit
-					</button>
+					<button class="btn btn-default" id="button" name="button"><a style="color: inherit; text-decoration: none" href="/status">Submit</button>
 				</form>
 			</div>
 			<br /> {% with errors = get_flashed_messages(category_filter=["error"]) %} {% if errors %} 
@@ -94,18 +78,16 @@
 				{% endfor %} 
 			</div>
 			{% endif %} {% endwith %} 
-			<script src="https://code.jquery.com/jquery-1.10.2.js">
-			</script>
+			<script type=text/javascript src="{{url_for('static', filename='jquery-1.10.2.js') }}"></script>
 			<script type="text/javascript">
-
-		var frm = $('#linear_form');
+		var linear_form = $('#linear_form');
 		
-		frm.submit(function (e) {
+		linear_form.submit(function (e) {
 		e.preventDefault();
 		    $.ajax({
 		        type: 'POST',
             	url: '/postdata',
-            	data: frm.serialize(),
+            	data: linear_form.serialize(),
 		        success: function(data, status, request) {
 		            console('ok');
 		        },
@@ -114,6 +96,6 @@
 		        }
 		    });
 		});
-	
+			
 			</script>
 			{% endblock %}

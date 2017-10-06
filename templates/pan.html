@@ -9,7 +9,10 @@
       <li><a href="/">Home</a></li>
       <li><a href="/linear">Linear Slider</a></li>
       <li class="active"><a href="/pan">Panoramic Slider</a></li>
-    </ul>
+      <li><a href="/status">Status</a></li>
+    </ul><form id="shutdown" class="navbar-form navbar-right" method="POST">
+        <button type="shutdown" class="btn btn-danger"><a style="color: inherit; text-decoration: none" href="/shutdown_pi" onclick="return confirm('Are you sure?');">Shutdown</a></button>
+      </form>
   </div>
 </nav>
 <div class='container'>

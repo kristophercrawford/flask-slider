@@ -1,4 +1,4 @@
-{% extends 'layout.html' %} {% block body %} 
+{% extends 'layout.html' %} {% block body %}
 <body>
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -6,10 +6,10 @@
       <a class="navbar-brand" href="#">PySlider</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="/">Home</a></li>
+      <li><a href="/">Home</a></li>
       <li><a href="/linear">Linear Slider</a></li>
       <li><a href="/pan">Panoramic Slider</a></li>
-      <li><a href="/status">Status</a></li>
+      <li class="active"><a href="/status">Status</a></li>
     </ul>
     <form id="shutdown" class="navbar-form navbar-right" method="POST">
         <button type="shutdown" class="btn btn-danger"><a style="color: inherit; text-decoration: none" href="/shutdown_pi" onclick="return confirm('Are you sure?');">Shutdown</a></button>
@@ -17,11 +17,7 @@
   </div>
 </nav>
 <div class='container'>
-<h3>Camera Slider Landing Page</h3>
-<form method="POST">
-	<button class="btn btn-default" id="nav1" value="nav1" name="navbtn">Linear Slide</button>
-	<button class="btn btn-default" id="nav2" value="nav2" name="navbtn">Panning Slide</button>
-	</form>
-	</div>
+<p>Current shot is: {{ current_shot }} out of: {{ total_shots }}.</p>
+    </div>
 </body>
 {% endblock %}

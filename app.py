@@ -3,6 +3,7 @@ from time import sleep
 import RPi.GPIO as GPIO
 import threading
 import _thread
+import os
 
 # These are GPIO variables the PI uses to interface with the drv8825
 dir_pin = 8  # Direction GPIO Pin
@@ -25,36 +26,39 @@ class FuncThread(threading.Thread):
 def slider_move(u_input):
 
     # print(u_input)
-    # ImmutableMultiDict([('slider_speed', '1/16'), ('direction', '0'), ('steps', '10')])
+    # ImmutableMultiDict([('direction', '0'), ('shots', '10'), ('time_delay', '10')])
 
     # Break passed json data into seperate variables
-    slider_speed = u_input['slider_speed']
-    step_input = int(u_input['steps'])
     dir_input = int(u_input['direction'])
+    shot_input = int(u_input['shots'])
+    time_input = int(u_input['time_delay'])
 
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(dir_pin, GPIO.OUT)
     GPIO.setup(step_pin, GPIO.OUT)
     GPIO.output(dir_pin, dir_input)
 
-    step_count = 48 # Steps per Revolution (360 / 7.5)
+    step_count = int(48 * (800 / int(shot_input)))
     delay = .0005
 
     MODE = (14, 15, 18)
     GPIO.setup(MODE, GPIO.OUT)
-    RESOLUTION = {'full': (0, 0, 0),
-                  'half': (1, 0, 0),
+    RESOLUTION = {'Full': (0, 0, 0),
+                  'Half': (1, 0, 0),
                   '1/4': (0, 1, 0),
                   '1/8': (1, 1, 0),
                   '1/16': (0, 0, 1),
                   '1/32': (1, 0, 1)}
-    GPIO.output(MODE, RESOLUTION[slider_speed])
-    for x in range(step_input):
-        for x in range(step_count):
+    GPIO.output(MODE, RESOLUTION['1/16'])
+
+
+    for x in range(shot_input):
+        for y in range(step_count):
             GPIO.output(step_pin, GPIO.HIGH)
             sleep(delay)
             GPIO.output(step_pin, GPIO.LOW)
             sleep(delay)
+        sleep(time_input)
 
     GPIO.cleanup()
 
@@ -95,8 +99,13 @@ def linear():
 @app.route('/postdata', methods=['POST'])
 def postdata():
     u_input = request.form
+    print(u_input)
     _thread.start_new_thread(slider_move, (u_input,))
     return url_for('homepage')
+
+@app.route('/status')
+def status():
+    return render_template('status.html')
 
 @app.route('/pan', methods=['GET', 'POST'])
 def pan():
@@ -107,6 +116,11 @@ def pan():
         take_picture()
 
     return render_template('pan.html')
+
+@app.route('/shutdown_pi', methods=['GET','POST'])
+def shutdown():
+    os.system("sudo shutdown +1")
+    return render_template('home.html')
 
 
 if __name__ == '__main__':
