@@ -6,8 +6,9 @@ import _thread
 import os
 
 # These are GPIO variables the PI uses to interface with the drv8825
-dir_pin = 8  # Direction GPIO Pin
-step_pin = 7  # Step GPIO Pin
+dir_pin = 5  # Direction GPIO Pin
+step_pin = 6  # Step GPIO Pin
+sleep_pin = 11 # Enable/disable controller
 
 app = Flask(__name__)
 app.secret_key = 'some_secret'
@@ -38,10 +39,13 @@ def slider_move(u_input):
     GPIO.setup(step_pin, GPIO.OUT)
     GPIO.output(dir_pin, dir_input)
 
+    GPIO.setup(sleep_pin, GPIO.OUT)
+    GPIO.output(sleep_pin, 1) # Set output to high to turn on controller
+
     step_count = int(48 * (800 / int(shot_input)))
     delay = .0005
 
-    MODE = (14, 15, 18)
+    MODE = (13, 19, 26)
     GPIO.setup(MODE, GPIO.OUT)
     RESOLUTION = {'Full': (0, 0, 0),
                   'Half': (1, 0, 0),
@@ -49,7 +53,7 @@ def slider_move(u_input):
                   '1/8': (1, 1, 0),
                   '1/16': (0, 0, 1),
                   '1/32': (1, 0, 1)}
-    GPIO.output(MODE, RESOLUTION['1/16'])
+    GPIO.output(MODE, RESOLUTION['Full'])
 
 
     for x in range(shot_input):

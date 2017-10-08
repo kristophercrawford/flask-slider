@@ -52,7 +52,7 @@
 				Left to Right&nbsp; 
 				<input type="radio" name="direction" value="1" required>
 					Right to Left<br> <br /> 
-					<button class="btn btn-default" id="button" name="button"><a style="color: inherit; text-decoration: none" href="/status">Submit</button>
+					<button class="btn btn-default" id="button" name="button">Submit</button>
 				</form>
 			</div>
 			<br /> {% with errors = get_flashed_messages(category_filter=["error"]) %} {% if errors %} 
@@ -88,9 +88,9 @@
 		        type: 'POST',
             	url: '/postdata',
             	data: linear_form.serialize(),
-		        success: function(data, status, request) {
-		            console('ok');
-		        },
+		        success: function() {
+            window.location.href = "/status";
+        },
 		        error: function(result) {
 		            alert('error');
 		        }
