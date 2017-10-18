@@ -53,7 +53,7 @@ def slider_move(u_input):
                   '1/8': (1, 1, 0),
                   '1/16': (0, 0, 1),
                   '1/32': (1, 0, 1)}
-    GPIO.output(MODE, RESOLUTION['Full'])
+    GPIO.output(MODE, RESOLUTION['1/16'])
 
 
     for x in range(shot_input):
@@ -68,18 +68,25 @@ def slider_move(u_input):
 
 
 def take_picture():
-
-    # sleeve = ground red
-    expose = 21 # black
-    focus = 20 # white
+    # sub function to fire remote shutter
+    # connect 2N2222 transistor base to expose and focus pins defined below through a 10k resistor
+    # connect emitter pin to board ground and common from remote shutter
+    # connect collector pin to expose/focus wires on remote shutter
+    # brown = common
+    expose = 17 # red / green
+    focus = 27 # orage / white
 
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(expose, GPIO.OUT)
     GPIO.setup(focus, GPIO.OUT)
-    GPIO.output(focus, 1)
-    GPIO.output(expose, 1)
-    sleep(5)
-    GPIO.cleanup()
+
+    GPIO.output(focus, True) # set focus pin to to high to focus and start light metering
+    sleep(3) # wait three seconds for camera to come out of sleep
+    GPIO.output(expose, True) # set expose pin to high to fire shutter
+    sleep(.1) # delay time between setting pins to low
+    GPIO.output(expose, False) # set expose pin to low
+    GPIO.output(focus, False) # set focus pin to low
+    GPIO.cleanup() # cleanup in-use pins
 
 
 @app.route('/', methods=['GET', 'POST'])
