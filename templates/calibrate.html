@@ -1,0 +1,57 @@
+{% extends 'layout.html' %} {% block body %} 
+<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#">PySlider</a> 
+		</div>
+		<ul class="nav navbar-nav">
+			<li> <a href="/"> Home </a> </li>
+			<li class="active"> <a href="/calibrate"> Calibrate </a></li>
+			<li> <a href="/linear"> Linear Slider </a> </li>
+			<li> <a href="/pan"> Panoramic Slider </a> </li>
+			<li> <a href="/status"> Status </a> </li>
+		</ul>
+		<form id="shutdown" class="navbar-form navbar-right">
+			<button type="shutdown" class="btn btn-danger"> <a style="color: inherit; text-decoration: none" href="/shutdown_pi" onclick="return confirm('Are you sure?');">Shutdown</a></button> 
+		</form>
+	</div>
+</nav>
+<div class='container'>
+	<h3>Calibrate Trolley</h3>
+	<form id="begin_calibration" method="POST">
+		<button class="btn btn-default" id="button" value="begin" name="button">Begin</button> 
+	</form>
+</div>
+<br />
+{% with errors = get_flashed_messages(category_filter=["error"]) %} {% if errors %} 
+<div class="container alert alert-danger fade in alert-dismissable">
+	<a href="#" class="close" data-dismiss="alert" aria-label="close"> &times; </a> {%- for message in errors %} 
+	<p>
+		{{ message }} 
+	</p>
+	{% endfor %} 
+</div>
+{% endif %} {% endwith %} {% with success = get_flashed_messages(category_filter=["success"]) %} {% if success %} 
+<div class="container alert alert-success fade in alert-dismissable">
+	<a href="#" class="close" data-dismiss="alert" aria-label="close"> &times; </a> {% for message in success %} 
+	<p>
+		{{ message }} 
+	</p>
+	{% endfor %} 
+</div>
+{% endif %} {% endwith %} <script type="text/javascript" src="{{url_for('static', filename='jquery-1.10.2.js') }}">
+		
+</script>
+	<script type="text/javascript">
+		$("button").click(function(e) {
+		    e.preventDefault();
+		    $.ajax({
+		        type: "POST",
+		        url: "/calibrate",
+		        data: { 
+		            id: $(this).val()
+		        },
+		    });
+		});
+	</script>
+{% endblock %} 

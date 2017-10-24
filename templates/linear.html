@@ -2,84 +2,56 @@
 <nav class="navbar navbar-inverse">
 	<div class="container-fluid">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="#">
-				PySlider
-			</a>
+			<a class="navbar-brand" href="#">PySlider</a> 
 		</div>
 		<ul class="nav navbar-nav">
-			<li>
-				<a href="/">
-					Home
-				</a>
-			</li>
-			<li class="active">
-				<a href="/linear">
-					Linear Slider
-				</a>
-			</li>
-			<li>
-				<a href="/pan">
-					Panoramic Slider
-				</a>
-			</li>
-			      <li><a href="/status">Status</a></li>
-
+			<li> <a href="/"> Home </a> </li>
+			<li><a href="/calibrate">Calibrate</a></li>
+			<li class="active"> <a href="/linear">Linear Slider</a></li>
+			<li> <a href="/pan"> Panoramic Slider</a></li>
+			<li><a href="/status">Status</a></li>
 		</ul>
-<form id="shutdown" class="navbar-form navbar-right">
-        <button type="shutdown" class="btn btn-danger"><a style="color: inherit; text-decoration: none" href="/shutdown_pi" onclick="return confirm('Are you sure?');">Shutdown</a></button>
-      </form>
+		<form id="shutdown" class="navbar-form navbar-right">
+			<button type="shutdown" class="btn btn-danger"><a style="color: inherit; text-decoration: none" href="/shutdown_pi" onclick="return confirm('Are you sure?');">Shutdown</a></button> 
+		</form>
 	</div>
 </nav>
 <div class='container'>
 	<h3>
-		Linear Slider
+		Linear Slider 
 	</h3>
 	<form id="linear_form" method="POST">
-	<label>
-			Time Delay Between Shots (seconds):&nbsp;
-		</label>
-		<input type="number" name="time_delay" required style="width: 60px;">
-		<br /> 
-		<label>
-			Number of Shots:&nbsp;
-		</label>
-		<input type="number" name="shots" required style="width: 60px;">
-			<br /> 
-			<label>
-				Slider Direction:&nbsp;
-			</label>
-			<input type="radio" name="direction" value="0" required>
-				Left to Right&nbsp; 
-				<input type="radio" name="direction" value="1" required>
-					Right to Left<br> <br /> 
-					<button class="btn btn-default" id="button" name="button">Submit</button>
-				</form>
-			</div>
-			<br /> {% with errors = get_flashed_messages(category_filter=["error"]) %} {% if errors %} 
-			<div class="container alert alert-danger fade in alert-dismissable">
-				<a href="#" class="close" data-dismiss="alert" aria-label="close">
-					&times;
-				</a>
-				{%- for message in errors %} 
-				<p>
-					{{ message }}
-				</p>
-				{% endfor %} 
-			</div>
-			{% endif %} {% endwith %} {% with success = get_flashed_messages(category_filter=["success"]) %} {% if success %} 
-			<div class="container alert alert-success fade in alert-dismissable">
-				<a href="#" class="close" data-dismiss="alert" aria-label="close">
-					&times;
-				</a>
-				{% for message in success %} 
-				<p>
-					{{ message }}
-				</p>
-				{% endfor %} 
-			</div>
-			{% endif %} {% endwith %} 
-			<script type=text/javascript src="{{url_for('static', filename='jquery-1.10.2.js') }}"></script>
-			<script type="text/javascript">
+		<label> Time Delay Between Shots (seconds):&nbsp; </label> 
+		<input type="number" name="time_delay" required style="width: 60px;"> <br />
+		<label> Number of Shots:&nbsp; </label> 
+		<input type="number" name="shots" required style="width: 60px;"> <br />
+		<label> Slider Direction:&nbsp; </label> 
+		<input type="radio" name="direction" value="0" required> Left to Right&nbsp; 
+		<input type="radio" name="direction" value="1" required> Right to Left<br> <br />
+		<button class="btn btn-default" id="button" name="button">Submit</button> 
+	</form>
+</div>
+<br />
+{% with errors = get_flashed_messages(category_filter=["error"]) %} {% if errors %} 
+<div class="container alert alert-danger fade in alert-dismissable">
+	<a href="#" class="close" data-dismiss="alert" aria-label="close"> &times; </a> {%- for message in errors %} 
+	<p>
+		{{ message }} 
+	</p>
+	{% endfor %} 
+</div>
+{% endif %} {% endwith %} {% with success = get_flashed_messages(category_filter=["success"]) %} {% if success %} 
+<div class="container alert alert-success fade in alert-dismissable">
+	<a href="#" class="close" data-dismiss="alert" aria-label="close"> &times; </a> {% for message in success %} 
+	<p>
+		{{ message }} 
+	</p>
+	{% endfor %} 
+</div>
+{% endif %} {% endwith %} <script type="text/javascript" src="{{url_for('static', filename='jquery-1.10.2.js') }}">
+</script>
+<script type="text/javascript">
+
 		var linear_form = $('#linear_form');
 		
 		linear_form.submit(function (e) {
@@ -97,5 +69,6 @@
 		    });
 		});
 			
-			</script>
-			{% endblock %}
+			
+</script>
+{% endblock %} 
