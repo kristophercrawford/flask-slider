@@ -6,12 +6,12 @@
 		</div>
 		<ul class="nav navbar-nav">
 			<li> <a href="/"> Home </a> </li>
-			<li><a href="/calibrate">Calibrate</a></li>
 			<li class="active"> <a href="/linear">Linear Slider</a></li>
 			<li> <a href="/pan"> Panoramic Slider</a></li>
 			<li><a href="/status">Status</a></li>
 		</ul>
 		<form id="shutdown" class="navbar-form navbar-right">
+			<button type="calibrate" class="btn btn-primary"><a style="color: inherit; text-decoration: none" href="/calibrate">Calibrate</a></button>
 			<button type="shutdown" class="btn btn-danger"><a style="color: inherit; text-decoration: none" href="/shutdown_pi" onclick="return confirm('Are you sure?');">Shutdown</a></button> 
 		</form>
 	</div>
